@@ -98,3 +98,21 @@ function services_views_retrieve($view_name, $display_id = 'default', $args = ar
   }
   return $result;
 }
+
+/**
+ * Execute a view and return results.
+ */
+function services_views_execute_view($view_info) {
+  $view_name = $view_info['view_name'];
+  $display_id = $view_info['display_id'];
+
+  $args = array();
+
+  $view = views_get_view($view_name);
+  $view->set_arguments($args);
+
+  $output = $view->render($display_id);
+
+  $view->destroy();
+  return $output;
+}

@@ -4,3 +4,6 @@ package = Services
 core = 7.x
 dependencies[] = services
 dependencies[] = views
+
+files[] = includes/views/views_plugin_display_services.inc
+
