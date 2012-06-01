@@ -70,11 +70,11 @@ function services_views_services_resources() {
         'optional' => TRUE,
         'default value' => 10,
       ),
-      'theme_output' => array(
-        'name' => 'theme_output',
+      'format_output' => array(
+        'name' => 'format_output',
         'type' => 'bool',
         'description' => 'Whether to return the raw data results or style the results.',
-        'source' => array('param' => 'theme_output'),
+        'source' => array('param' => 'format_output'),
         'optional' => TRUE,
         'default value' => FALSE,
       ),
