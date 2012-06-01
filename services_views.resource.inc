@@ -49,6 +49,8 @@ function services_views_retrieve($view_name, $display_id = 'default', $args = ar
   else {
     $view->set_items_per_page($limit);
   }
+
+  // If we display values and not themed view output.
   if (empty($return_type)) {
     $view->set_display($display_id);
     $view->pre_execute();
@@ -60,31 +62,31 @@ function services_views_retrieve($view_name, $display_id = 'default', $args = ar
     if ($row_plugin == 'node') {
       $nodes = array();
       foreach ($view->result as $row) {
-        $nodes[] = services_node_load(node_load($row->nid));
+        $nodes[] = node_load($row->nid);
       }
       $result = $nodes;
     }
-  }
-  elseif ($row_plugin == 'fields') {
-    $items = array();
-    foreach ($view->result as $row) {
-      $item = new stdClass();
-      foreach ($view->field as $field_id => $field) {
-        if (!empty($field->options['label'])) {
-          $field_label = strtolower($field->options['label']);
+    elseif ($row_plugin == 'fields') {
+      $items = array();
+      foreach ($view->result as $row) {
+        $item = new stdClass();
+        foreach ($view->field as $field_id => $field) {
+          if (!empty($field->options['label'])) {
+            $field_label = strtolower($field->options['label']);
+          }
+          elseif ($field->field_alias) {
+            $field_label = $field->field_alias;
+          }
+          else {
+            $field_label = $field_id;
+          }
+          $item->$field_label = $field->theme($row);
         }
-        elseif ($field->field_alias) {
-          $field_label = $field->field_alias;
-        }
-        else {
-          $field_label = $field_id;
-        }
-        $item->$field_label = $field->theme($row);
+        $items[] = $item;
       }
-      $items[] = $item;
-    }
-    if ($items) {
-      $result = $items;
+      if ($items) {
+        $result = $items;
+      }
     }
   }
   elseif ($return_type == 'view') {
