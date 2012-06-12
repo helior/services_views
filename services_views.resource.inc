@@ -113,7 +113,64 @@ function services_views_execute_view($view_info) {
   $view = views_get_view($view_name);
   $view->set_arguments($args);
 
+  // Execute a view.
   $output = $view->render($display_id);
+
+  // Add support for Services Raw formatter.
+  foreach ($view->result as $index => $row) {
+    foreach ($view->field as $field_key => $field) {
+      $f_key = 'field_' . $field_key;
+      if (isset($row->$f_key)) {
+
+        $target_key = $field_key;
+        $format = ($field->options['type'] == 'services') ? 'raw' : 'rendered';
+
+        // Skip this field?
+        if (isset($field->options['exclude']) && $field->options['exclude'] == TRUE) {
+          continue;
+        }
+
+        if (isset($field->options['label'])) {
+          $target_key = $field->options['label'];
+        }
+
+        $output[$index]->$target_key = array();
+        $obj = &$output[$index]->$target_key;
+
+        foreach ($row->$f_key as $idx => $res) {
+
+          if (isset($res[$format])) {
+            $data = $res[$format];
+
+            // If this is raw formatter.
+            if ($format == 'raw') {
+              foreach ($data as $key => $val) {
+                if ($field->options['settings']['skip_safe'] && strpos($key, 'safe_') === 0) {
+                  unset($data[$key]);
+                }
+                if ($field->options['settings']['skip_empty_values'] && empty($val)) {
+                  unset($data[$key]);
+                }
+              }
+              $obj[$idx] = $data;
+            }
+            // Rendered output.
+            elseif (isset($data['#access']) && $data['#access'] == TRUE) {
+              $obj[$idx] = render($data);
+            }
+            else {
+              $obj[$idx] = array('error' => t('Access denied or format unknown on field.'));
+            }
+          }
+        }
+
+        // Check cardinality of the field.
+        if ($field->field_info['cardinality'] == 1 && count($obj) == 1) {
+          $obj = $obj[$idx];
+        }
+      }
+    }
+  }
 
   $view->destroy();
   return $output;

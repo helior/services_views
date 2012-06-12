@@ -198,3 +198,59 @@ function services_views_form_views_ui_config_item_form_alter(&$form, $form_state
   unset($form['options']['custom_label']['#description']);
   $form['options']['label']['#title'] = t('Custom value key');
 }
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function services_views_field_formatter_info_alter(&$formatters) {
+  $field_types = array();
+  foreach ($formatters as $formatter) {
+    $field_types = array_merge($field_types, $formatter['field types']);
+  }
+  // Remove duplicates.
+  $field_types = array_unique($field_types);
+
+  $formatters['services'] = array(
+    'label' => t('Services Raw'),
+    'field types' => $field_types,
+    'module' => 'services_views',
+  );
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function services_views_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  if ($display['type'] == 'services') {
+    $element['skip_safe'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Skip safe values'),
+      '#default_value' => $settings['skip_safe'],
+    );
+    $element['skip_empty_values'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Skip empty values'),
+      '#default_value' => $settings['skip_empty_values'],
+    );
+  }
+
+  return $element;
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function services_views_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  if ($display['type'] == 'services') {
+    foreach ($items as $delta => $item) {
+      $element[$delta] = $item;
+    }
+  }
+
+  return $element;
+}
