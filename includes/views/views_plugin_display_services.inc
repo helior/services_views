@@ -60,7 +60,7 @@ class views_plugin_display_services extends views_plugin_display {
 
   function preview() {
     module_load_include('resource.inc', 'services_views');
-    return '<pre>' . var_export(services_views_execute_view(NULL, $this->view), TRUE) . '</pre>';
+    return '<pre>' . var_export(services_views_execute_view(NULL, $this->view, $this->display->id), TRUE) . '</pre>';
   }
 
   /**

@@ -104,7 +104,7 @@ function services_views_retrieve($view_name, $display_id = 'default', $args = ar
 /**
  * Execute a view and return results.
  */
-function services_views_execute_view($view_info, $view = NULL) {
+function services_views_execute_view($view_info, $view = NULL, $display_id = NULL) {
   if (!empty($view_info)) {
     $view_name = $view_info['view_name'];
     $display_id = $view_info['display_id'];
