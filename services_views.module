@@ -221,8 +221,10 @@ function services_views_field_formatter_info_alter(&$formatters) {
 
   $formatters['services'] = array(
     'label' => t('Services Raw'),
+    'description' => t('Formatter for Services to provide value as it is in entity object.'),
     'field types' => $field_types,
     'module' => 'services_views',
+    'settings' => array(),
   );
 }
 
