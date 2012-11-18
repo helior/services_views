@@ -132,7 +132,7 @@ function services_views_execute_view($view_info, $view = NULL, $display_id = NUL
           continue;
         }
 
-        if (isset($field->options['label'])) {
+        if (isset($field->options['label']) && !empty($field->options['label'])) {
           $target_key = $field->options['label'];
         }
 
