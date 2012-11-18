@@ -205,7 +205,6 @@ function services_views_form_views_ui_config_item_form_alter(&$form, $form_state
   $form['options']['custom_label']['#title'] = t('Set custom value key');
   unset($form['options']['custom_label']['#description']);
   $form['options']['label']['#title'] = t('Custom value key');
-  $form['options']['label']['#required'] = TRUE;
 }
 
 /**
