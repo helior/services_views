@@ -115,6 +115,9 @@ function services_views_execute_view($view_info, $view = NULL, $display_id = NUL
     $view->set_arguments($args);
   }
 
+  // Avoid translation of the field labels.
+  $view->localization_plugin = views_get_plugin('localization', 'none');
+
   // Execute a view.
   $output = $view->render($display_id);
 
