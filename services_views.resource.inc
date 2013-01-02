@@ -177,6 +177,8 @@ function services_views_execute_view($view_info, $view = NULL, $display_id = NUL
     }
   }
 
+  drupal_alter('services_views_execute_view', $output, $view);
+
   $view->destroy();
   return $output;
 }
