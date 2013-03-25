@@ -126,7 +126,7 @@ class views_plugin_display_services extends views_plugin_display {
       $current_path = $this->get_option('path');
       if ($current_path != $form_state['values']['path']) {
         // We build resources from database to bypass cache.
-        module_load_include('resource_build.inc', 'services');
+        module_load_include('inc', 'services', 'includes/services.resource_build');
         $resources = _services_build_resources();
 
         if (array_key_exists($form_state['values']['path'], $resources)) {
