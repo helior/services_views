@@ -68,7 +68,7 @@ function services_views_services_resources() {
         'description' => 'The total number of entries to list.',
         'source' => array('param' => 'limit'),
         'optional' => TRUE,
-        'default value' => 10,
+        'default value' => -1,
       ),
       'format_output' => array(
         'name' => 'format_output',

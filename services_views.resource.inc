@@ -25,7 +25,7 @@
  * @return
  *  Array. The views return.
  */
-function services_views_retrieve($view_name, $display_id = 'default', $args = array(), $offset = 0, $limit = 10, $return_type = FALSE, $filters = array()) {
+function services_views_retrieve($view_name, $display_id = 'default', $args = array(), $offset = 0, $limit = -1, $return_type = FALSE, $filters = array()) {
   $result = array();
   $view = views_get_view($view_name);
 
@@ -39,14 +39,16 @@ function services_views_retrieve($view_name, $display_id = 'default', $args = ar
     // If offset is set we can't have a user pager.
     if (empty($offset)) {
       $view->set_use_pager(TRUE);
-      $view->set_items_per_page($limit);
+      if ($limit >= 0) {
+        $view->set_items_per_page($limit);
+      }
     }
     else {
       // Disable the user pager.
       $view->set_use_pager(FALSE);
     }
   }
-  else {
+  elseif ($limit >= 0) {
     $view->set_items_per_page($limit);
   }
 
