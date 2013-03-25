@@ -11,15 +11,15 @@
  *   String. The views name.
  * @param $display_id
  *   String (optional). The views display name.
+ * @param $args
+ *   Array (optional). A list of arguments to pass to the view.
  * @param $offset
  *   Integer (optional). An offset integer for paging.
  * @param $limit
  *   Integer (optional). A limit integer for paging.
- * @param $args
- *   Array (optional). A list of arguments to pass to the view.
  * @param $return_type
  *   String (optional). Whether to return the raw data results (FALSE), the entire views object ('view') or themed results ('theme').
- * @param $args
+ * @param $filters
  *   Array (optional). A list of exposed filters to pass to the view.
  *
  * @return
