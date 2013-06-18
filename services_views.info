@@ -6,4 +6,5 @@ dependencies[] = services
 dependencies[] = views
 
 files[] = includes/views/views_plugin_display_services.inc
-
+files[] = includes/views/views_plugin_display_services_views.inc
+files[] = includes/views/views_plugin_style_services_views.inc

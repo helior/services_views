@@ -169,6 +169,29 @@ function services_views_views_plugins() {
         'use more' => TRUE,
         'admin' => t('Services'),
       ),
+      'services_views' => array(
+        'title' => t('Services Views'),
+        'help' => t('Export view to Services.'),
+        'handler' => 'views_plugin_display_services_views',
+        'theme' => 'views_view',
+        'accept attachments' => FALSE,
+        'use ajax' => FALSE,
+        'use pager' => FALSE,
+        'use more' => FALSE,
+        'admin' => t('Services Views'),
+        'services' => TRUE,
+      ),
+    ),
+    'style' => array(
+      'services_views' => array(
+        'title' => t('Services Views'),
+        'help' => t('Generates data for services consumption.'),
+        'handler' => 'views_plugin_style_services_views',
+        'theme' => 'views_view_unformatted',
+        'uses row plugin' => TRUE,
+        'uses options' => TRUE,
+        'type' => 'services',
+      ),
     ),
   );
   return $plugins;
