@@ -122,6 +122,32 @@ function services_views_services_resources() {
     }
   }
 
+  foreach (views_get_applicable_views('services') as $data) {
+    list($view, $display_id) = $data;
+    $path = $view->display[$display_id]->display_options['path'];
+
+    $resources[$path] = array();
+    $resources[$path]['index'] = array(
+      'view info' => array('view_name' => $view->name, 'display_id' => $display_id),
+      'help' => filter_xss('View: ' . $view->human_name),
+      'file' => array(
+        'type' => 'inc',
+        'module' => 'services_views',
+        'name' => 'services_views.resource',
+      ),
+      'callback' => 'services_views_execute_view2',
+        // Reuse services_views_access access callback.
+      'access callback' => 'services_views_access',
+      'access arguments' => array(
+        'view',
+        array(
+          'view_name' => $view->name,
+          'display_id' => $display_id,
+        ),
+      ),
+    );
+  }
+
   return $resources;
 }
 
