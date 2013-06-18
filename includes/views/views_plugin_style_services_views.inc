@@ -39,6 +39,30 @@ class views_plugin_style_services_views extends views_plugin_style {
       }
     }
     unset($this->view->row_index);
+
+    array_walk($output, array($this, '_curate_row_array_walk_callback'));
+
     return $output;
+  }
+
+  /**
+   * This method is an array_walk callback that does two things:
+   *   - Re-keys each field to use the configured label instead of the internal
+   *     field id.
+   *   - Removes fields that want to be excluded from the final results.
+   */
+  function _curate_row_array_walk_callback(&$item, $key) {
+    $new_item = array();
+
+    foreach ($item as $id => $value) {
+      // Skip excluded fields.
+      if (empty($this->view->field[$id]->options['exclude'])) {
+        $label = $this->view->field[$id]->label();
+        $label = !empty($label) ? $label : $id;
+        $new_item[$label] = $value;
+      }
+    }
+
+    $item = $new_item;
   }
 }
