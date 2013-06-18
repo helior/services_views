@@ -7,6 +7,8 @@ class views_plugin_display_services_views extends views_plugin_display {
 
   function option_definition() {
     $options = parent::option_definition();
+    // @fixme ensure that this style plugin is the default.
+    $options['style_plugin']['default'] = 'services_views';
     $options['path'] = array('default' => '');
 
     return $options;
