@@ -184,3 +184,20 @@ function services_views_execute_view($view_info, $view = NULL, $display_id = NUL
   $view->destroy();
   return $output;
 }
+
+/**
+ * Execute a Services view and return the results.
+ */
+function services_views_execute_services_view($info) {
+  $args = func_get_args();
+  array_shift($args);
+
+  $view = views_get_view($info['view_name']);
+  $view->set_arguments($args);
+  $output = $view->render($info['display_id']);
+
+  drupal_alter('services_views_execute_view', $output, $view);
+  $view->destroy();
+
+  return $output;
+}

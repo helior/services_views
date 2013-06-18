@@ -1,22 +1,8 @@
 <?php
 
 class views_plugin_display_services_views extends views_plugin_display {
-  // function init(&$view, &$display, $options = NULL) {
-  //   parent::init($view, $display, $options);
-
-  //   // Set the default row style. Ideally this would be part of the option
-  //   // definition, but in this case it's dependent on the view's base table,
-  //   // which we don't know until init().
-  //   $style_plugins = views_fetch_plugin_names('style', $this->get_style_type(), array($view->base_table));
-  //   $default_style_plugin = key($style_plugins);
-  //   if ($this->options['style_plugin'] == '') {
-  //     $this->options['style_plugin'] = $default_style_plugin;
-  //   }
-  //   $this->display_options['style_plugin'] = $default_style_plugin;
-  // }
-
-  function uses_breadcrumb() { return FALSE; }
   function get_style_type() { return 'services'; }
+  function uses_breadcrumb() { return FALSE; }
   function has_path() {return TRUE; }
 
   function option_definition() {

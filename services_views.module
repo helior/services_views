@@ -135,7 +135,7 @@ function services_views_services_resources() {
         'module' => 'services_views',
         'name' => 'services_views.resource',
       ),
-      'callback' => 'services_views_execute_view2',
+      'callback' => 'services_views_execute_services_view',
         // Reuse services_views_access access callback.
       'access callback' => 'services_views_access',
       'access arguments' => array(
