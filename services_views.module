@@ -202,7 +202,7 @@ function services_views_views_plugins() {
         'theme' => 'views_view',
         'accept attachments' => FALSE,
         'use ajax' => FALSE,
-        'use pager' => FALSE,
+        'use pager' => TRUE,
         'use more' => FALSE,
         'admin' => t('Services Views'),
         'services' => TRUE,
