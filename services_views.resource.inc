@@ -100,6 +100,9 @@ function services_views_retrieve($view_name, $display_id = 'default', $args = ar
     // We want to keep the result an array.
     $result[] = $view->preview($display_id);
   }
+
+  drupal_alter('services_views_execute_view', $result, $view);
+
   return $result;
 }
 
