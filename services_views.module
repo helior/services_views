@@ -163,19 +163,21 @@ function services_views_services_resources() {
  *  Boolean. TRUE if the user is allowed to load the given view.
  */
 function services_views_access($op = 'view', $args = array()) {
+  list($view_name, $display_id) = $args;
+
   switch ($op) {
     case 'view':
-      $view = views_get_view($args[0]);
+      $view = views_get_view($view_name);
       if (empty($view)) {
-        return services_error(t('View @view could not be found', array('@view' => $args[0])), 404);
+        return services_error(t('View @view could not be found', array('@view' => $view_name)), 404);
       }
-      if (!isset($view->display[$args[1]])) {
+      if (!isset($view->display[$display_id])) {
         return services_error(t('Display @display on view @view could not be found', array(
-          '@display' => $args[1],
-          '@view' => $args[0],
+          '@display' => $display_id,
+          '@view' => $view_name,
         )), 404);
       }
-      return $view->access($args[1]);
+      return $view->access($display_id);
   }
 }
 
