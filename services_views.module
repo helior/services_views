@@ -163,7 +163,8 @@ function services_views_services_resources() {
  *  Boolean. TRUE if the user is allowed to load the given view.
  */
 function services_views_access($op = 'view', $args = array()) {
-  list($view_name, $display_id) = $args;
+  $view_name = isset($args['view_name']) ? $args['view_name'] : $args[0];
+  $display_id = isset($args['display_id']) ? $args['display_id'] : $args[1];
 
   switch ($op) {
     case 'view':
