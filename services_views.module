@@ -182,6 +182,10 @@ function services_views_views_plugins() {
 function services_views_services_request_preprocess_alter($controller, &$args, $options) {
   if (isset($controller['view info'])) {
     array_unshift($args, $controller['view info']);
+    $args[0]['args'] = array();
+    if (!empty($_GET['args'])) {
+      $args[0]['args'] = $_GET['args'];
+    }
   }
 }
 

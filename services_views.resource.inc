@@ -110,11 +110,11 @@ function services_views_execute_view($view_info, $view = NULL, $display_id = NUL
   if (!empty($view_info)) {
     $view_name = $view_info['view_name'];
     $display_id = $view_info['display_id'];
-
-    $args = array();
+    $args = $view_info['args'];
 
     $view = views_get_view($view_name);
     $view->set_arguments($args);
+    $view->execute_display($display_id, $args);
   }
 
   // Avoid translation of the field labels.
