@@ -1,6 +1,36 @@
 <?php
 
 class views_plugin_style_services_views extends views_plugin_style {
+
+  function option_definition() {
+    $options = parent::option_definition();
+    $options['keys'] = array('default' => array());
+
+    return $options;
+  }
+
+  function options_form(&$form, &$form_state) {
+    parent::options_form($form, $form_state);
+
+    $handlers = $this->display->handler->get_handlers('field');
+    if (empty($handlers)) {
+      $form['error_markup'] = array(
+        '#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your response object keys.') . '</div>',
+      );
+      return;
+    }
+
+    foreach ($this->display->handler->get_field_labels() as $id => $label) {
+      $form['keys'][$id] = array(
+        '#type' => 'textfield',
+        '#title' => $label,
+        '#default_value' => isset($this->options['keys'][$id]) ? $this->options['keys'][$id] : '',
+      );
+    }
+
+    return $form;
+  }
+
   /**
    * Render the grouping sets.
    *
@@ -57,8 +87,7 @@ class views_plugin_style_services_views extends views_plugin_style {
     foreach ($item as $id => $value) {
       // Skip excluded fields.
       if (empty($this->view->field[$id]->options['exclude'])) {
-        $label = $this->view->field[$id]->label();
-        $label = !empty($label) ? $label : $id;
+        $label = empty($this->options['keys'][$id]) ? $id : $this->options['keys'][$id];
         $new_item[$label] = $value;
       }
     }
